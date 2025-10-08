@@ -1,18 +1,36 @@
+server:
+  port: ${PORT:8080}
+
 spring:
+  application:
+    name: api-gateway
+  profiles:
+    include:
+      - iam
+      - profiles
   cloud:
     gateway:
-      server:
-        webflux:
-          routes:
-            - id: iam_route
-              uri: ${IAM_ROUTE_URI:http://localhost:8081}
-              predicates:
-                - Path=/authentication/**,/users/**
-              filters:
-                - PrefixPath=/api/v1
-            - id: challenges_route
-              uri: ${CHALLENGES_ROUTE_URI:http://localhost:8082}
-              predicates:
-                - Path=/challenges/**,/solutions/**,/tests/**
-              filters:
-                - PrefixPath=/api/v1
+      # Global CORS configuration
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowedOrigins: "*"
+            allowedMethods:
+              - GET
+              - POST
+              - PUT
+              - DELETE
+              - PATCH
+              - OPTIONS
+            allowedHeaders: "*"
+            exposedHeaders:
+              - Authorization
+            allowCredentials: false
+            maxAge: 3600
+
+# Logging configuration
+logging:
+  level:
+    root: INFO
+    org.springframework.cloud.gateway: DEBUG
+    reactor.netty: DEBUG

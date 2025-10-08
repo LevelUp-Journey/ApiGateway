@@ -10,7 +10,9 @@ spring:
       globalcors:
         cors-configurations:
           '[/**]':
-            allowedOrigins: "*"
+            allowedOrigins:
+              - "http://localhost:3000"
+              - "http://192.168.100.57:3000"
             allowedMethods:
               - GET
               - POST
@@ -21,7 +23,7 @@ spring:
             allowedHeaders: "*"
             exposedHeaders:
               - Authorization
-            allowCredentials: false
+            allowCredentials: true
             maxAge: 3600
 
       routes:

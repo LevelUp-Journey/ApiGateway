@@ -4,6 +4,10 @@ server:
 spring:
   application:
     name: api-gateway
+  profiles:
+    include:
+      - iam
+      - profiles
   cloud:
     gateway:
       # Global CORS configuration
@@ -23,91 +27,6 @@ spring:
               - Authorization
             allowCredentials: false
             maxAge: 3600
-
-      routes:
-        # ============= IAM MICROSERVICE ROUTES =============
-
-        # Authentication routes
-        - id: iam_authentication_route
-          uri: ${IAM_SERVICE_URL:https://microservice-iam.onrender.com}
-          predicates:
-            - Path=/api/v1/authentication/**
-          filters:
-            - StripPrefix=0
-
-        # OAuth2 authorization routes
-        - id: iam_oauth2_route
-          uri: ${IAM_SERVICE_URL:https://microservice-iam.onrender.com}
-          predicates:
-            - Path=/oauth2/**
-          filters:
-            - StripPrefix=0
-
-        # OAuth2 login callbacks
-        - id: iam_oauth2_callback_route
-          uri: ${IAM_SERVICE_URL:https://microservice-iam.onrender.com}
-          predicates:
-            - Path=/login/oauth2/**
-          filters:
-            - StripPrefix=0
-
-        # Roles endpoints
-        - id: iam_roles_route
-          uri: ${IAM_SERVICE_URL:https://microservice-iam.onrender.com}
-          predicates:
-            - Path=/ap/v1/roles/**
-          filters:
-            - StripPrefix=0
-
-        # Users endpoints
-        - id: iam_users_route
-          uri: ${IAM_SERVICE_URL:https://microservice-iam.onrender.com}
-          predicates:
-            - Path=/api/v1/users/**
-          filters:
-            - StripPrefix=0
-
-        # IAM health check
-        - id: iam_health_route
-          uri: ${IAM_SERVICE_URL:https://microservice-iam.onrender.com}
-          predicates:
-            - Path=/api/v1/iam/health/**
-          filters:
-            - StripPrefix=0
-
-        # ============= PROFILES MICROSERVICE ROUTES =============
-
-        # Profiles endpoints
-        - id: profiles_route
-          uri: ${PROFILES_SERVICE_URL:https://microservice-profiles.onrender.com}
-          predicates:
-            - Path=/api/v1/profiles/**
-          filters:
-            - StripPrefix=0
-
-        # Ranks endpoints
-        - id: ranks_route
-          uri: ${PROFILES_SERVICE_URL:https://microservice-profiles.onrender.com}
-          predicates:
-            - Path=/api/v1/ranks/**
-          filters:
-            - StripPrefix=0
-
-        # Profile ranks endpoints
-        - id: profile_ranks_route
-          uri: ${PROFILES_SERVICE_URL:https://microservice-profiles.onrender.com}
-          predicates:
-            - Path=/api/v1/profile-ranks/**
-          filters:
-            - StripPrefix=0
-
-        # Profiles health check
-        - id: profiles_health_route
-          uri: ${PROFILES_SERVICE_URL:https://microservice-profiles.onrender.com}
-          predicates:
-            - Path=/api/v1/profiles/health/**
-          filters:
-            - StripPrefix=0
 
 # Logging configuration
 logging:

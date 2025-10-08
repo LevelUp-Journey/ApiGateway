@@ -1,0 +1,37 @@
+spring:
+  cloud:
+    gateway:
+      routes:
+        # ============= PROFILES MICROSERVICE ROUTES =============
+
+        # Profiles endpoints
+        - id: profiles_route
+          uri: ${PROFILES_SERVICE_URL:https://microservice-profiles.onrender.com}
+          predicates:
+            - Path=/api/v1/profiles/**
+          filters:
+            - StripPrefix=0
+
+        # Ranks endpoints
+        - id: ranks_route
+          uri: ${PROFILES_SERVICE_URL:https://microservice-profiles.onrender.com}
+          predicates:
+            - Path=/api/v1/ranks/**
+          filters:
+            - StripPrefix=0
+
+        # Profile ranks endpoints
+        - id: profile_ranks_route
+          uri: ${PROFILES_SERVICE_URL:https://microservice-profiles.onrender.com}
+          predicates:
+            - Path=/api/v1/profile-ranks/**
+          filters:
+            - StripPrefix=0
+
+        # Profiles health check
+        - id: profiles_health_route
+          uri: ${PROFILES_SERVICE_URL:https://microservice-profiles.onrender.com}
+          predicates:
+            - Path=/api/v1/profiles/health/**
+          filters:
+            - StripPrefix=0

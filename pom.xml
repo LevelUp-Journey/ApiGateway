@@ -19,21 +19,34 @@
     <description>Microservice API Gateway for LevelUpJourney</description>
 
     <properties>
-        <java.version>24</java.version>
+        <!-- CORREGIDO: Alineado con tu log (decía 'using Java 25') -->
+        <java.version>25</java.version>
         <spring-cloud.version>2025.0.0</spring-cloud.version>
     </properties>
 
     <dependencies>
-        <!-- 🌐 Spring Cloud Gateway (con soporte para lb://SERVICE_NAME y WebFlux) -->
+        <!-- 🌐 Spring Cloud Gateway (WebFlux) -->
+        <!-- CORREGIDO: Esta es la dependencia moderna. Reemplaza al 'spring-cloud-starter-gateway' obsoleto -->
+        <!-- Esta dependencia YA INCLUYE el load balancer, solucionando el error 'lb://' -->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-gateway</artifactId>
+            <artifactId>spring-cloud-starter-gateway-server-webflux</artifactId>
         </dependency>
 
         <!-- 🧭 Eureka Client (para descubrir servicios registrados en Eureka Server) -->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework.cloud</groupId>
+                    <artifactId>spring-cloud-starter-netflix-ribbon</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.netflix.ribbon</groupId>
+                    <artifactId>ribbon-eureka</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <!-- ⚖️ LoadBalancer (necesario para lb://SERVICE_NAME) -->

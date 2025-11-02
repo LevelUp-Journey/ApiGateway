@@ -1,125 +1,124 @@
 server:
-  port: ${PORT:8080}
+    port: ${PORT:8080}
 
 spring:
-  application:
-    name: API_GATEWAY
-  cloud:
-    gateway:
-      server:
-        webflux:
-          routes:
-            # ============= 1. CHALLENGES MICROSERVICE =============
-            - id: challenges_service_main_route
-              uri: lb://CHALLENGES_SERVICE
-              predicates:
-                - Path=/api/v1/challenges/**
+    application:
+        name: API_GATEWAY
+    cloud:
+        gateway:
+            server:
+                webflux:
+                    routes:
+                        # ============= 1. CHALLENGES MICROSERVICE =============
+                        - id: challenges_service_main_route
+                          uri: lb://CHALLENGES_SERVICE
+                          predicates:
+                              - Path=/api/v1/challenges/**
 
-            - id: challenges_service_solutions_route
-              uri: lb://CHALLENGES_SERVICE
-              predicates:
-                - Path=/api/v1/solutions/**
+                        - id: challenges_service_solutions_route
+                          uri: lb://CHALLENGES_SERVICE
+                          predicates:
+                              - Path=/api/v1/solutions/**
 
-            # ============= 2. COMMUNITY MICROSERVICE =============
-            - id: community_service_communities_route
-              uri: lb://COMMUNITY_SERVICE
-              predicates:
-                - Path=/api/v1/communities/**
+                        # ============= 2. COMMUNITY MICROSERVICE =============
+                        - id: community_service_communities_route
+                          uri: lb://COMMUNITY_SERVICE
+                          predicates:
+                              - Path=/api/v1/communities/**
 
-            - id: community_service_posts_route
-              uri: lb://COMMUNITY_SERVICE
-              predicates:
-                - Path=/api/v1/posts/**
+                        - id: community_service_posts_route
+                          uri: lb://COMMUNITY_SERVICE
+                          predicates:
+                              - Path=/api/v1/posts/**
 
-            - id: community_service_reactions_route
-              uri: lb://COMMUNITY_SERVICE
-              predicates:
-                - Path=/api/v1/reactions/**
+                        - id: community_service_reactions_route
+                          uri: lb://COMMUNITY_SERVICE
+                          predicates:
+                              - Path=/api/v1/reactions/**
 
-            - id: community_service_subscriptions_route
-              uri: lb://COMMUNITY_SERVICE
-              predicates:
-                - Path=/api/v1/subscriptions/**
+                        - id: community_service_subscriptions_route
+                          uri: lb://COMMUNITY_SERVICE
+                          predicates:
+                              - Path=/api/v1/subscriptions/**
 
-            # ============= 3. IAM MICROSERVICE =============
-            - id: iam_service_auth_route
-              uri: lb://IAM_SERVICE
-              predicates:
-                - Path=/api/v1/authentication/**
+                        # ============= 3. IAM MICROSERVICE =============
+                        - id: iam_service_auth_route
+                          uri: lb://IAM_SERVICE
+                          predicates:
+                              - Path=/api/v1/authentication/**
 
-            # ============= 4. LEARNING MICROSERVICE =============
-            - id: learning_service_courses_route
-              uri: lb://LEARNING_SERVICE
-              predicates:
-                - Path=/api/v1/courses/**
+                        # ============= 4. LEARNING MICROSERVICE =============
+                        - id: learning_service_courses_route
+                          uri: lb://LEARNING_SERVICE
+                          predicates:
+                              - Path=/api/v1/courses/**
 
-            - id: learning_service_guides_route
-              uri: lb://LEARNING_SERVICE
-              predicates:
-                - Path=/api/v1/guides/**
+                        - id: learning_service_guides_route
+                          uri: lb://LEARNING_SERVICE
+                          predicates:
+                              - Path=/api/v1/guides/**
 
-            - id: learning_service_topics_route
-              uri: lb://LEARNING_SERVICE
-              predicates:
-                - Path=/api/v1/topics/**
+                        - id: learning_service_topics_route
+                          uri: lb://LEARNING_SERVICE
+                          predicates:
+                              - Path=/api/v1/topics/**
 
-            # ============= 5. PROFILES MICROSERVICE =============
-            - id: profiles_service_profiles_route
-              uri: lb://PROFILE_SERVICE
-              predicates:
-                - Path=/api/v1/profiles/**
+                        # ============= 5. PROFILES MICROSERVICE =============
+                        - id: profiles_service_profiles_route
+                          uri: lb://PROFILE_SERVICE
+                          predicates:
+                              - Path=/api/v1/profiles/**
 
-            - id: profiles_service_competitive_route
-              uri: lb://PROFILE_SERVICE
-              predicates:
-                - Path=/api/v1/competitive/**
+                        - id: profiles_service_competitive_route
+                          uri: lb://PROFILE_SERVICE
+                          predicates:
+                              - Path=/api/v1/competitive/**
 
-            - id: profiles_service_leaderboard_route
-              uri: lb://PROFILE_SERVICE
-              predicates:
-                - Path=/api/v1/leaderboard/**
+                        - id: profiles_service_leaderboard_route
+                          uri: lb://PROFILE_SERVICE
+                          predicates:
+                              - Path=/api/v1/leaderboard/**
 
-            - id: profiles_service_scores_route
-              uri: lb://PROFILE_SERVICE
-              predicates:
-                - Path=/api/v1/scores/**
+                        - id: profiles_service_scores_route
+                          uri: lb://PROFILE_SERVICE
+                          predicates:
+                              - Path=/api/v1/scores/**
 
-          discovery:
-            locator:
-              enabled: true
-              lower-case-service-id: true
-          globals:
-            cors-configurations:
-              '[/**]':
-                allowedOrigins:
-                  - "http://localhost:3000"
-                  - "http://192.168.0.118:3000"
-                allowedMethods:
-                  - GET
-                  - POST
-                  - PUT
-                  - DELETE
-                  - PATCH
-                  - OPTIONS
-                allowedHeaders: "*"
-                exposedHeaders:
-                  - Authorization
-                allowCredentials: true
-                maxAge: 3600
+                    discovery:
+                        locator:
+                            enabled: true
+                    globals:
+                        cors-configurations:
+                            "[/**]":
+                                allowedOrigins:
+                                    - "http://localhost:3000"
+                                    - "http://192.168.0.118:3000"
+                                allowedMethods:
+                                    - GET
+                                    - POST
+                                    - PUT
+                                    - DELETE
+                                    - PATCH
+                                    - OPTIONS
+                                allowedHeaders: "*"
+                                exposedHeaders:
+                                    - Authorization
+                                allowCredentials: true
+                                maxAge: 3600
 
 logging:
-  level:
-    root: INFO
-    org.springframework.cloud.gateway: DEBUG
-    reactor.netty: DEBUG
+    level:
+        root: INFO
+        org.springframework.cloud.gateway: DEBUG
+        reactor.netty: DEBUG
 
 # ============= Service Discovery =============
 eureka:
-  client:
-    serviceUrl:
-      defaultZone: ${SERVICE_DISCOVERY_URL:http://localhost:8761/eureka/}
-    register-with-eureka: true
-    fetch-registry: true
-  instance:
-    prefer-ip-address: true
-  # Check this field when docker is ready
+    client:
+        serviceUrl:
+            defaultZone: ${SERVICE_DISCOVERY_URL:http://localhost:8761/eureka/}
+        register-with-eureka: true
+        fetch-registry: true
+    instance:
+        prefer-ip-address: true
+    # Check this field when docker is ready

@@ -52,6 +52,13 @@
             <artifactId>spring-cloud-starter-loadbalancer</artifactId>
         </dependency>
 
+        <!-- 🔐 Spring Dotenv (para leer archivos .env) -->
+        <dependency>
+            <groupId>me.paulschwarz</groupId>
+            <artifactId>spring-dotenv</artifactId>
+            <version>4.0.0</version>
+        </dependency>
+
         <!-- 🛠️ Spring Boot DevTools -->
         <dependency>
             <groupId>org.springframework.boot</groupId>

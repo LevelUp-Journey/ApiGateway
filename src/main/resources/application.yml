@@ -86,9 +86,15 @@ spring:
         locator:
           enabled: true
           lower-case-service-id: true
+      default-filters:
+        - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
       globalcors:
         cors-configurations:
           '[/**]':
+            allowedOriginPatterns:
+              - "http://localhost:*"
+              - "http://192.168.*.*:*"
+              - "https://*.azurecontainerapps.io"
             allowedOrigins:
               - "http://localhost:3000"
               - "http://192.168.0.118:3000"
@@ -102,6 +108,7 @@ spring:
             allowedHeaders: "*"
             exposedHeaders:
               - Authorization
+              - Content-Type
             allowCredentials: true
             maxAge: 3600
 
@@ -117,7 +124,7 @@ logging:
 eureka:
   client:
     serviceUrl:
-      defaultZone: ${SERVICE_DISCOVERY_URL:http://localhost:8761/eureka/}
+      defaultZone: ${SERVICE_DISCOVERY_URL}
     register-with-eureka: true
     fetch-registry: true
   instance:

@@ -44,6 +44,10 @@ spring:
           uri: lb://iam-service
           predicates:
             - Path=/api/v1/authentication/**
+        - id: iam_oauth_providers
+          uri: lb://iam-service
+          predicates:
+            - Path=/login/**
 
         # ============= 4. LEARNING MICROSERVICE =============
         - id: learning_service_courses_route

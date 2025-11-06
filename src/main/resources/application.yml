@@ -86,35 +86,37 @@ spring:
           predicates:
             - Path=/api/v1/scores/**
 
-      discovery:
-        locator:
-          enabled: true
-          lower-case-service-id: true
-      default-filters:
-        - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
-      globalcors:
-        cors-configurations:
-          "[/**]":
-            allowedOriginPatterns:
-              - "http://localhost:*"
-              - "http://192.168.*.*:*"
-              - "https://*.azurecontainerapps.io"
-            allowedOrigins:
-              - "http://localhost:3000"
-              - "http://192.168.0.118:3000"
-            allowedMethods:
-              - GET
-              - POST
-              - PUT
-              - DELETE
-              - PATCH
-              - OPTIONS
-            allowedHeaders: "*"
-            exposedHeaders:
-              - Authorization
-              - Content-Type
-            allowCredentials: true
-            maxAge: 3600
+      server:
+        webflux:
+          discovery:
+            locator:
+              enabled: true
+              lower-case-service-id: true
+          default-filters:
+            - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
+          globalcors:
+            cors-configurations:
+              "[/**]":
+                allowedOriginPatterns:
+                  - "http://localhost:*"
+                  - "http://192.168.*.*:*"
+                  - "https://*.azurecontainerapps.io"
+                allowedOrigins:
+                  - "http://localhost:3000"
+                  - "http://192.168.0.118:3000"
+                allowedMethods:
+                  - GET
+                  - POST
+                  - PUT
+                  - DELETE
+                  - PATCH
+                  - OPTIONS
+                allowedHeaders: "*"
+                exposedHeaders:
+                  - Authorization
+                  - Content-Type
+                allowCredentials: true
+                maxAge: 3600
 
 logging:
   level:
@@ -127,10 +129,19 @@ logging:
 # ============= Service Discovery =============
 eureka:
   client:
-    serviceUrl:
-      defaultZone: ${SERVICE_DISCOVERY_URL}
+    service-url:
+      defaultZone: ${SERVICE_DISCOVERY_URL:http://service-discovery:8761/eureka/}
     register-with-eureka: true
     fetch-registry: true
+    registry-fetch-interval-seconds: 10    # sincroniza lista de servicios cada 10s
+    healthcheck:
+      enabled: true                       # usa health endpoint para validación real
+
   instance:
     prefer-ip-address: true
-  # Check this field when docker is ready
+    lease-renewal-interval-in-seconds: 10  # envía heartbeat cada 10s
+    lease-expiration-duration-in-seconds: 30 # Eureka espera 30s antes de eliminarlo
+    instance-id: ${spring.application.name}:${server.port}:${random.value}
+    metadata-map:
+      zone: default
+

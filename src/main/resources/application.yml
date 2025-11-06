@@ -6,86 +6,6 @@ spring:
     name: api-gateway
   cloud:
     gateway:
-      routes:
-        # ============= 1. CHALLENGES MICROSERVICE =============
-        - id: challenges_service_main_route
-          uri: lb://challenges-service
-          predicates:
-            - Path=/api/v1/challenges/**
-
-        - id: challenges_service_solutions_route
-          uri: lb://challenges-service
-          predicates:
-            - Path=/api/v1/solutions/**
-
-        # ============= 2. COMMUNITY MICROSERVICE =============
-        - id: community_service_communities_route
-          uri: lb://community-service
-          predicates:
-            - Path=/api/v1/communities/**
-
-        - id: community_service_posts_route
-          uri: lb://community-service
-          predicates:
-            - Path=/api/v1/posts/**
-
-        - id: community_service_reactions_route
-          uri: lb://community-service
-          predicates:
-            - Path=/api/v1/reactions/**
-
-        - id: community_service_subscriptions_route
-          uri: lb://community-service
-          predicates:
-            - Path=/api/v1/subscriptions/**
-
-        # ============= 3. IAM MICROSERVICE =============
-        - id: iam_service_auth_route
-          uri: lb://iam-service
-          predicates:
-            - Path=/api/v1/authentication/**
-        - id: iam_oauth_providers
-          uri: lb://iam-service
-          predicates:
-            - Path=/login/**
-
-        # ============= 4. LEARNING MICROSERVICE =============
-        - id: learning_service_courses_route
-          uri: lb://learning-service
-          predicates:
-            - Path=/api/v1/courses/**
-
-        - id: learning_service_guides_route
-          uri: lb://learning-service
-          predicates:
-            - Path=/api/v1/guides/**
-
-        - id: learning_service_topics_route
-          uri: lb://learning-service
-          predicates:
-            - Path=/api/v1/topics/**
-
-        # ============= 5. PROFILES MICROSERVICE =============
-        - id: profiles_service_profiles_route
-          uri: lb://profile-service
-          predicates:
-            - Path=/api/v1/profiles/**
-
-        - id: profiles_service_competitive_route
-          uri: lb://profile-service
-          predicates:
-            - Path=/api/v1/competitive/**
-
-        - id: profiles_service_leaderboard_route
-          uri: lb://profile-service
-          predicates:
-            - Path=/api/v1/leaderboard/**
-
-        - id: profiles_service_scores_route
-          uri: lb://profile-service
-          predicates:
-            - Path=/api/v1/scores/**
-
       server:
         webflux:
           discovery:
@@ -117,6 +37,85 @@ spring:
                   - Content-Type
                 allowCredentials: true
                 maxAge: 3600
+          routes:
+            # ============= 1. CHALLENGES MICROSERVICE =============
+                    - id: challenges_service_main_route
+                      uri: lb://challenges-service
+                      predicates:
+                        - Path=/api/v1/challenges/**
+
+                    - id: challenges_service_solutions_route
+                      uri: lb://challenges-service
+                      predicates:
+                        - Path=/api/v1/solutions/**
+
+                    # ============= 2. COMMUNITY MICROSERVICE =============
+                    - id: community_service_communities_route
+                      uri: lb://community-service
+                      predicates:
+                        - Path=/api/v1/communities/**
+
+                    - id: community_service_posts_route
+                      uri: lb://community-service
+                      predicates:
+                        - Path=/api/v1/posts/**
+
+                    - id: community_service_reactions_route
+                      uri: lb://community-service
+                      predicates:
+                        - Path=/api/v1/reactions/**
+
+                    - id: community_service_subscriptions_route
+                      uri: lb://community-service
+                      predicates:
+                        - Path=/api/v1/subscriptions/**
+
+                    # ============= 3. IAM MICROSERVICE =============
+                    - id: iam_service_auth_route
+                      uri: lb://iam-service
+                      predicates:
+                        - Path=/api/v1/authentication/**
+                    - id: iam_oauth_providers
+                      uri: lb://iam-service
+                      predicates:
+                        - Path=/login/**
+
+                    # ============= 4. LEARNING MICROSERVICE =============
+                    - id: learning_service_courses_route
+                      uri: lb://learning-service
+                      predicates:
+                        - Path=/api/v1/courses/**
+
+                    - id: learning_service_guides_route
+                      uri: lb://learning-service
+                      predicates:
+                        - Path=/api/v1/guides/**
+
+                    - id: learning_service_topics_route
+                      uri: lb://learning-service
+                      predicates:
+                        - Path=/api/v1/topics/**
+
+                    # ============= 5. PROFILES MICROSERVICE =============
+                    - id: profiles_service_profiles_route
+                      uri: lb://profile-service
+                      predicates:
+                        - Path=/api/v1/profiles/**
+
+                    - id: profiles_service_competitive_route
+                      uri: lb://profile-service
+                      predicates:
+                        - Path=/api/v1/competitive/**
+
+                    - id: profiles_service_leaderboard_route
+                      uri: lb://profile-service
+                      predicates:
+                        - Path=/api/v1/leaderboard/**
+
+                    - id: profiles_service_scores_route
+                      uri: lb://profile-service
+                      predicates:
+                        - Path=/api/v1/scores/**
 
 logging:
   level:

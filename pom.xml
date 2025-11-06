@@ -24,13 +24,11 @@
     </properties>
 
     <dependencies>
-        <!-- 🌐 Spring Cloud Gateway -->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-gateway</artifactId>
         </dependency>
 
-        <!-- 🧭 Eureka Client (para descubrir servicios registrados en Eureka Server) -->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
@@ -46,20 +44,17 @@
             </exclusions>
         </dependency>
 
-        <!-- ⚖️ LoadBalancer (necesario para lb://SERVICE_NAME) -->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-loadbalancer</artifactId>
         </dependency>
 
-        <!-- 🔐 Spring Dotenv (para leer archivos .env) -->
         <dependency>
             <groupId>me.paulschwarz</groupId>
             <artifactId>spring-dotenv</artifactId>
             <version>4.0.0</version>
         </dependency>
 
-        <!-- 🛠️ Spring Boot DevTools -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
@@ -67,14 +62,17 @@
             <optional>true</optional>
         </dependency>
 
-        <!-- ⚙️ Processor para configuración (anotaciones @ConfigurationProperties) -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-configuration-processor</artifactId>
             <optional>true</optional>
         </dependency>
 
-        <!-- 🧪 Testing -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
@@ -84,7 +82,6 @@
 
     <dependencyManagement>
         <dependencies>
-            <!-- 📦 BOM de Spring Cloud (importante para versiones compatibles) -->
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-dependencies</artifactId>
@@ -97,7 +94,6 @@
 
     <build>
         <plugins>
-            <!-- 🔧 Compilador de Maven -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -111,7 +107,6 @@
                 </configuration>
             </plugin>
 
-            <!-- 🚀 Plugin de ejecución de Spring Boot -->
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>

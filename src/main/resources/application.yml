@@ -129,7 +129,7 @@ logging:
 eureka:
   client:
     service-url:
-      defaultZone: ${SERVICE_DISCOVERY_URL:http://service-discovery:8761/eureka/}
+      defaultZone: ${SERVICE_DISCOVERY_URL}
     register-with-eureka: true
     fetch-registry: true
     registry-fetch-interval-seconds: 10    # sincroniza lista de servicios cada 10s
@@ -143,4 +143,3 @@ eureka:
     instance-id: ${spring.application.name}:${server.port}:${random.value}
     metadata-map:
       zone: default
-

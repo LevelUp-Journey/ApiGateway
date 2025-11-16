@@ -60,25 +60,20 @@ spring:
                   predicates:
                       - Path=/api/v1/posts/**
 
-                - id: community_service_reactions_route
+                - id: community_service_feed_route
                   uri: lb://community-service
                   predicates:
-                      - Path=/api/v1/reactions/**
+                      - Path=/api/v1/feed/**
 
                 - id: community_service_subscriptions_route
                   uri: lb://community-service
                   predicates:
                       - Path=/api/v1/subscriptions/**
 
-                - id: community_service_feed_route
+                - id: community_service_users_route
                   uri: lb://community-service
                   predicates:
-                      - Path=/api/v1/feed/**
-
-                - id: community_service_follows_route
-                  uri: lb://community-service
-                  predicates:
-                      - Path=/api/v1/follows/**
+                      - Path=/api/v1/users/**
 
                 # ============= 3. IAM MICROSERVICE =============
                 - id: iam_service_auth_route

@@ -51,27 +51,27 @@ spring:
 
                 # ============= 2. COMMUNITY MICROSERVICE =============
                 - id: community_service_communities_route
-                  uri: lb://community-service
+                  uri: lb://gommunity-service
                   predicates:
                       - Path=/api/v1/communities/**
 
                 - id: community_service_posts_route
-                  uri: lb://community-service
+                  uri: lb://gommunity-service
                   predicates:
                       - Path=/api/v1/posts/**
 
                 - id: community_service_feed_route
-                  uri: lb://community-service
+                  uri: lb://gommunity-service
                   predicates:
                       - Path=/api/v1/feed/**
 
                 - id: community_service_subscriptions_route
-                  uri: lb://community-service
+                  uri: lb://gommunity-service
                   predicates:
                       - Path=/api/v1/subscriptions/**
 
                 - id: community_service_users_route
-                  uri: lb://community-service
+                  uri: lb://gommunity-service
                   predicates:
                       - Path=/api/v1/users/**
 

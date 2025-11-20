@@ -122,9 +122,8 @@ spring:
                   predicates:
                       - Path=/api/v1/scores/**
 
-                # ============= 6. USER ATTENTION MICROSERVICE =============
-                - id: user_attention_service
-                  uri: lb://user-attention-service
+                - id: profiles_service_suggestions_route
+                  uri: lb://profile-service
                   predicates:
                       - Path=/api/v1/suggestions/**
 

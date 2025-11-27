@@ -1,0 +1,156 @@
+server:
+    port: ${PORT:8080}
+
+spring:
+    application:
+        name: api-gateway
+    cloud:
+        gateway:
+            server:
+                webflux:
+                    discovery:
+                        locator:
+                            enabled: true
+                            lower-case-service-id: true
+            default-filters:
+                - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
+            globalcors:
+                cors-configurations:
+                    "[/**]":
+                        allowedOriginPatterns:
+                            - "http://localhost:*"
+                            - "http://192.168.*.*:*"
+                            - "https://*.azurecontainerapps.io"
+                        allowedOrigins:
+                            - "http://localhost:3000"
+                            - "http://192.168.0.118:3000"
+                        allowedMethods:
+                            - GET
+                            - POST
+                            - PUT
+                            - DELETE
+                            - PATCH
+                            - OPTIONS
+                        allowedHeaders: "*"
+                        exposedHeaders:
+                            - Authorization
+                            - Content-Type
+                        allowCredentials: true
+                        maxAge: 3600
+            routes:
+                # ============= 1. CHALLENGES MICROSERVICE =============
+                - id: challenges_service_main_route
+                  uri: lb://challenges-service
+                  predicates:
+                      - Path=/api/v1/challenges/**
+
+                - id: challenges_service_solutions_route
+                  uri: lb://challenges-service
+                  predicates:
+                      - Path=/api/v1/solutions/**
+
+                # ============= 2. COMMUNITY MICROSERVICE =============
+                - id: community_service_communities_route
+                  uri: lb://gommunity-service
+                  predicates:
+                      - Path=/api/v1/communities/**
+
+                - id: community_service_posts_route
+                  uri: lb://gommunity-service
+                  predicates:
+                      - Path=/api/v1/posts/**
+
+                - id: community_service_feed_route
+                  uri: lb://gommunity-service
+                  predicates:
+                      - Path=/api/v1/feed/**
+
+                - id: community_service_subscriptions_route
+                  uri: lb://gommunity-service
+                  predicates:
+                      - Path=/api/v1/subscriptions/**
+
+                - id: community_service_users_route
+                  uri: lb://gommunity-service
+                  predicates:
+                      - Path=/api/v1/users/**
+
+                # ============= 3. IAM MICROSERVICE =============
+                - id: iam_service_auth_route
+                  uri: lb://iam-service
+                  predicates:
+                      - Path=/api/v1/authentication/**
+                - id: iam_oauth_providers
+                  uri: lb://iam-service
+                  predicates:
+                      - Path=/login/**
+
+                # ============= 4. LEARNING MICROSERVICE =============
+                - id: learning_service_courses_route
+                  uri: lb://learning-service
+                  predicates:
+                      - Path=/api/v1/courses/**
+
+                - id: learning_service_guides_route
+                  uri: lb://learning-service
+                  predicates:
+                      - Path=/api/v1/guides/**
+
+                - id: learning_service_topics_route
+                  uri: lb://learning-service
+                  predicates:
+                      - Path=/api/v1/topics/**
+
+                # ============= 5. PROFILES MICROSERVICE =============
+                - id: profiles_service_profiles_route
+                  uri: lb://profile-service
+                  predicates:
+                      - Path=/api/v1/profiles/**
+
+                - id: profiles_service_competitive_route
+                  uri: lb://profile-service
+                  predicates:
+                      - Path=/api/v1/competitive/**
+
+                - id: profiles_service_leaderboard_route
+                  uri: lb://profile-service
+                  predicates:
+                      - Path=/api/v1/leaderboard/**
+
+                - id: profiles_service_scores_route
+                  uri: lb://profile-service
+                  predicates:
+                      - Path=/api/v1/scores/**
+
+                - id: profiles_service_suggestions_route
+                  uri: lb://profile-service
+                  predicates:
+                      - Path=/api/v1/suggestions/**
+
+logging:
+    level:
+        root: INFO
+        org.springframework.cloud.gateway: TRACE
+        org.springframework.web.reactive.function.client: TRACE
+        reactor.netty.http.client: DEBUG
+        reactor.netty.http.server: DEBUG
+
+# ============= Service Discovery =============
+eureka:
+    client:
+        service-url:
+            # Usa localhost:8761 como fallback si la variable de entorno no existe
+            defaultZone: ${SERVICE_DISCOVERY_URL:http://localhost:8761/eureka/}
+        register-with-eureka: true
+        fetch-registry: true
+        registry-fetch-interval-seconds: 10
+        healthcheck:
+            enabled: true
+
+    instance:
+        prefer-ip-address: true
+        lease-renewal-interval-in-seconds: 10
+        lease-expiration-duration-in-seconds: 30
+        instance-id: ${spring.application.name}:${server.port}:${random.value}
+        metadata-map:
+            zone: default

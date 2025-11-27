@@ -127,6 +127,12 @@ spring:
                   predicates:
                       - Path=/api/v1/suggestions/**
 
+                # ============= 6. ANALYTICS MICROSERVICE =============
+                - id: analytics_service_main_route
+                  uri: lb://analytics-service
+                  predicates:
+                      - Path=/api/v1/analytics/**
+
 logging:
     level:
         root: INFO

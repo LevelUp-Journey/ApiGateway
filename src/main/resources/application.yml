@@ -133,6 +133,11 @@ spring:
                   predicates:
                       - Path=/api/v1/analytics/**
 
+                - id: analytics_service_user_registration_route
+                  uri: lb://analytics-service
+                  predicates:
+                      - Path=/api/v1/user-registration-analytics/**
+
 logging:
     level:
         root: INFO
